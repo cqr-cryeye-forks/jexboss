@@ -1,0 +1,3 @@
+urllib3>=1.8
+ipaddress
+requests~=2.32.4
