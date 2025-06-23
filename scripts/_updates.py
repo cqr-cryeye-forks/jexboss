@@ -27,7 +27,6 @@ NORMAL = '\033[0m'
 ENDC = '\033[0m'
 
 import jexboss
-from sys import version_info
 import os
 import shutil
 from zipfile import ZipFile
@@ -57,10 +56,10 @@ def auto_update():
     # backup of prior version7
     if os.path.exists('old_version'):
         shutil.rmtree('old_version')
-    shutil.copytree(".", "." + os.path.sep + "old_version")
+    shutil.copytree("..", "." + os.path.sep + "old_version")
 
     # download and extract of new version
-    jexboss.print_and_flush(GREEN + " * Downloading the new version from %s." %url +ENDC )
+    jexboss.print_and_flush(GREEN + " * Downloading the new version from %s." % url + ENDC)
     r = gl_http_pool.request('GET', url)
     if r.status != 200:
         jexboss.print_and_flush(RED + " * Error: Could not complete the download of the new version. Check your internet connection." + ENDC)
@@ -68,12 +67,12 @@ def auto_update():
     with open('master.zip', 'wb') as f:
         f.write(r.data)
     z = ZipFile('master.zip', 'r')
-    jexboss.print_and_flush(GREEN + " * Extracting new version..." +ENDC)
-    z.extractall(path='.')
+    jexboss.print_and_flush(GREEN + " * Extracting new version..." + ENDC)
+    z.extractall(path='..')
     z.close()
     os.remove('master.zip')
     path_new_version = '.' + os.path.sep + 'jexboss-master'
-    jexboss.print_and_flush(GREEN + " * Replacing the current version with the new version..."  + ENDC)
+    jexboss.print_and_flush(GREEN + " * Replacing the current version with the new version..." + ENDC)
     for root, dirs, files in os.walk(path_new_version):
         for file in files:
             old_path = root.replace(path_new_version, '.') + os.path.sep

