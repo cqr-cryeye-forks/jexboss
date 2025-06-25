@@ -2,10 +2,12 @@ import sys
 
 from requests.models import parse_url
 
+from src.core.checker.check_connectivity import check_connectivity
 from src.core.checker.proxy import is_proxy_ok
+from src.core.checker.vulner import check_vul
 from src.core.cli.parse_args import parse_args
 from src.core.http import configure_http_pool
-from src.exploits.jx2 import auto_exploit, check_vul
+from src.exploits.auto_exploit import auto_exploit
 from src.utils.colors import Colors
 from src.utils.misc import print_and_flush
 
@@ -20,6 +22,9 @@ def main():
 
     if gl_args.gadget == 'dns':
         gl_args.cmd = gl_args.dns
+
+    global gl_interrupted
+    gl_interrupted = False
 
     vulnerables = False
     # check vulnerabilities for standalone mode
@@ -147,10 +152,3 @@ def main():
     else:
         print_and_flush(Colors.GREEN + "\n\n * Results: \n" +
                         "   The server is not vulnerable to bugs tested ... :D\n" + Colors.ENDC)
-    # infos
-    print_and_flush(Colors.ENDC + " * Info: review, suggestions, updates, etc: \n" +
-                    "   https://github.com/joaomatosf/jexboss\n")
-
-    print_and_flush(
-        Colors.GREEN + Colors.BOLD + " * DONATE: " + Colors.ENDC + "Please consider making a donation to help improve this tool,\n" +
-        Colors.GREEN + Colors.BOLD + " * Bitcoin Address: " + Colors.ENDC + " 14x4niEpfp7CegBYr3tTzTn4h6DAnDCD9C \n")
